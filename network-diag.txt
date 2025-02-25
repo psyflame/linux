@@ -1,0 +1,25 @@
+netcat
+
+nc -zv ya.ru 443
+Connection to ya.ru (5.255.255.242) 443 port [tcp/https] succeeded!
+
+-p port		Specify local port for remote connects
+
+nc -zv ya.ru 443 -p 3333
+Connection to ya.ru (5.255.255.242) 443 port [tcp/https] succeeded!
+
+в цикле
+
+while :; do nc -zv ya.ru 443; done
+while :; do nc -zv ya.ru 443 &>/dev/null && echo -n "!" || echo -n "."; done
+
+перебор сорс портов
+
+for i in {1024..5000}; do echo -n "$i:"; nc -zv ya.ru 443 -p $i &>/dev/null && echo "OK" || echo "FAIL"; sleep 1; done
+
+python - scapy
+https://scapy.net/
+
+tcpdump => wireshark вывод через пайп
+
+sudo tcpdump -ni br0 host mail.ru -U -w - | sudo wireshark -k -i -
