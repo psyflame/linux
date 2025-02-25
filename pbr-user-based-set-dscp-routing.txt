@@ -1,0 +1,2 @@
+sudo iptables -t mangle -A OUTPUT -p tcp -m owner --uid-owner vpnuser -j DSCP --set-dscp 0x10
+sudo -u vpnuser -- curl ipinfo.io
