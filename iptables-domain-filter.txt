@@ -1,0 +1,23 @@
+iptables -I OUTPUT 1 -p udp --dport 53 -m string --hex-string "|0b|wildberries|02|ru" --algo bm -m comment --comment "wildberries.ru" -j ACCEPT
+
+iptables -I OUTPUT 1 -p udp --dport 53 -m string --hex-string "|02|wb|02|ru" --algo bm -m comment --comment "wb.ru" -j ACCEPT
+
+
+
+
+*filter
+:INPUT DROP [779:111980]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [34615:8324695]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -s 192.168.88.0/24 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|027762027275|" --algo bm --to 65535 -m comment --comment "wb.ru" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|0b77696c6462657272696573027275|" --algo bm --to 65535 -m comment --comment "wildberries.ru" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|0664656269616e036f7267|" --algo bm --to 65535 -m comment --comment "debian.org" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|0664656269616e03636f6d|" --algo bm --to 65535 -m comment --comment "debian.com" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|06676f6f676c6503636f6d|" --algo bm --to 65535 -m comment --comment "google.com" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|06676f6f676c65027275|" --algo bm --to 65535 -m comment --comment "google.ru" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m string --hex-string "|0877626261736b6574027275|" --algo bm --to 65535 -m comment --comment "wbbasket.ru" -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -j DROP
+COMMIT
